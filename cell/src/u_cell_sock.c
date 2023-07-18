@@ -1583,17 +1583,31 @@ int32_t uCellSockWrite(uDeviceHandle_t cellHandle,
                             uAtClientCommandStop(atHandle);
                             written = true;
                         } else {
+                            uAtClientWriteString(atHandle, 
+                                                 (const char *)pData + dataOffset,
+                                                 true);
                             uAtClientCommandStop(atHandle);
+                            written = true;
+                            /* TODO: fix bug and add param switcher to send bytes
+                                bug: jumbled chars, incomplete command
+                                     uAtClientUnlock fails, next "AT"s are sent
+                                     as part of the USOWR command.
+
+                                e.g.: ե���brown fox jumps over the lazy dog.AT
+
                             // Wait for the prompt
                             if (uAtClientWaitCharacter(atHandle, '@') == 0) {
                                 // Wait for it...
                                 uPortTaskBlock(50);
                                 // Go!
+                                char lost[] = "4chr";
+                                uAtClientWriteBytes(atHandle, lost, strlen(lost), true);
                                 uAtClientWriteBytes(atHandle,
                                                     (const char *) pData + dataOffset,
                                                     thisSendSize, true);
                                 written = true;
                             }
+                            */
                         }
                         if (written) {
                             // Grab the response
