@@ -88,6 +88,17 @@ typedef struct {
        against it might end with the clause "; if this
        field is populated then the version field of
        this structure must be set to 1 or higher". */
+    const char *pApnUsername; /**< the APN username to use; if left as NULL
+                                    a database look-up will be used. If this
+                                    field is populated then the version field
+                                    of this structure must be set to 1 or
+                                    higher */
+    const char *pApnPassword; /**< the APN password to use; if left as NULL
+                                    a database look-up will be used. If this
+                                    field is populated then the version field
+                                    of this structure must be set to 1 or
+                                    higher */
+    /* This is the end of version 1 of this structure*/
 } uNetworkCfgCell_t;
 
 /** @}*/

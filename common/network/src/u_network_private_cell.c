@@ -183,6 +183,28 @@ int32_t uNetworkPrivateChangeStateCell(uDeviceHandle_t devHandle,
                 errorCode = uCellNetDisconnect(devHandle, pKeepGoingCallback);
             }
         }
+        else if ((pCfg != NULL) && (pCfg->version == 1) &&
+                (pCfg->type == U_NETWORK_TYPE_CELL) && (pContext != NULL)) {
+            if (pCfg->pKeepGoingCallback != NULL) {
+                // The user has given us a keep-going callback, so use it
+                pKeepGoingCallback = pCfg->pKeepGoingCallback;
+            } else {
+                // Set the stop time for the connect/disconnect calls
+                pContext->stopTimeMs = uPortGetTickTimeMs() +
+                                       (((int64_t) pCfg->timeoutSeconds) * 1000);
+            }
+            if (upNotDown) {
+                // Connect using user provided APN, username and password
+                errorCode = uCellNetConnect(devHandle, NULL,
+                                            pCfg->pApn,
+                                            pCfg->pApnUsername,
+                                            pCfg->pApnPassword,
+                                            pKeepGoingCallback);
+            } else {
+                // Disconnect
+                errorCode = uCellNetDisconnect(devHandle, pKeepGoingCallback);
+            }
+        }
     }
 
     return errorCode;
