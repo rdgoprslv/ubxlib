@@ -548,7 +548,7 @@ int32_t uCellHttpOpen(uDeviceHandle_t cellHandle, const char *pServerName,
                                                                pServerNameTmp,
                                                                U_CELL_HTTP_SERVER_NAME_MAX_LEN_BYTES + 1) > 0) {
                                         // Set the server IP address
-                                        errorCodeOrHandle = doUhttpString(atHandle, profileId, 0, pServerNameTmp);
+                                        errorCodeOrHandle = doUhttpString(atHandle, profileId, 1, pServerNameTmp);
                                         // The server port number is written later
                                     }
                                 } else {

@@ -405,6 +405,9 @@ static int32_t cellOpen(uHttpClientContext_t *pContext,
             errorCode = (uErrorCode_t) pContextCell->httpHandle;
             uPortFree(pContext->pPriv);
         } else {
+            /* TODO: setSecurity (AT+UHTTP=x,6,y) esta enviando 4 parametros,
+                     mas o datasheet fala que apenas 3 sao aceitos
+
             if (pContext->pSecurityContext != NULL) {
                 errorCode = (uErrorCode_t) uCellHttpSetSecurityOn(pContext->devHandle,
                                                                   pContextCell->httpHandle,
@@ -418,6 +421,8 @@ static int32_t cellOpen(uHttpClientContext_t *pContext,
                 uCellHttpClose(pContext->devHandle, pContextCell->httpHandle);
                 uPortFree(pContext->pPriv);
             }
+            */
+            errorCode = U_ERROR_COMMON_SUCCESS;
         }
     }
 
